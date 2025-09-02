@@ -27,12 +27,12 @@ const Menuitems = [
     navlabel: true,
     subheader: 'Student',
   },
-  {
-    id: uniqueId(),
-    title: 'Exams',
-    icon: IconTypography,
-    href: '/exam',
-  },
+  // {
+  //   id: uniqueId(),
+  //   title: 'Exams',
+  //   icon: IconTypography,
+  //   href: '/exam',
+  // },
   {
     id: uniqueId(),
     title: 'Result',

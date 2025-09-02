@@ -24,6 +24,7 @@ const ExamDetails = Loadable(lazy(() => import('../views/student/ExamDetails.jsx
 const CodeDetails = Loadable(lazy(() => import('../views/student/CodeDetails.jsx')));
 const ResultPage = Loadable(lazy(() => import('../views/student/ResultPage.jsx')));
 const Coder = Loadable(lazy(() => import('../views/student/Coder.jsx')));
+const profile = Loadable(lazy(() => import('../views/student/MyProfile.jsx')));
 //Auth Routes
 const Error = Loadable(lazy(() => import('../views/authentication/Error.jsx')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register.jsx')));

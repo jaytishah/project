@@ -8,12 +8,12 @@ const baselightTheme = createTheme({
     primary: {
       main: '#8C4AF2',
       light: '#ECF2FF',
-      dark: '#4570EA',
+      dark: '#a345eaff',
     },
     secondary: {
-      main: '#49BEFF',
+      main: '#ddb3f1ff',
       light: '#E8F7FF',
-      dark: '#23afdb',
+      dark: '#ad23dbff',
     },
     success: {
       main: '#13DEB9',
@@ -41,8 +41,8 @@ const baselightTheme = createTheme({
     },
     purple: {
       A50: '#EBF3FE',
-      A100: '#6610f2',
-      A200: '#557fb9',
+      A100: '#8510f2ff',
+      A200: '#a055b9ff',
     },
     grey: {
       100: '#F2F6FA',

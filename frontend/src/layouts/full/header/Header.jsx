@@ -6,7 +6,6 @@ import {
   styled,
   Stack,
   IconButton,
-  Badge,
   Typography,
   Tooltip,
 } from '@mui/material';
@@ -15,11 +14,12 @@ import _ from 'lodash';
 
 // components
 import Profile from './Profile';
-import { IconBellRinging, IconMenu } from '@tabler/icons-react';
+import { IconMenu } from '@tabler/icons-react';
 import { useSelector } from 'react-redux';
 
+
 // Styled wrapper to add purple glow on hover around avatar
-const ProfileWrapper = styled('div')(({ theme }) => ({
+const ProfileWrapper = styled('div')(() => ({
   borderRadius: '50%',
   display: 'inline-block',
   cursor: 'pointer',
@@ -29,26 +29,23 @@ const ProfileWrapper = styled('div')(({ theme }) => ({
   },
 }));
 
+const AppBarStyled = styled(AppBar)(({ theme }) => ({
+  boxShadow: '2px',
+  background: theme.palette.background.paper,
+  justifyContent: 'center',
+  backdropFilter: 'blur(4px)',
+  [theme.breakpoints.up('lg')]: {
+    minHeight: '70px',
+  },
+}));
+
+const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
+  width: '100%',
+  color: theme.palette.text.secondary,
+}));
+
 const Header = (props) => {
   const { userInfo } = useSelector((state) => state.auth);
-
-  // Optional notification menu anchor logic placeholder (not implemented here)
-  const anchorEl2 = null;
-
-  const AppBarStyled = styled(AppBar)(({ theme }) => ({
-    boxShadow: '2px',
-    background: theme.palette.background.paper,
-    justifyContent: 'center',
-    backdropFilter: 'blur(4px)',
-    [theme.breakpoints.up('lg')]: {
-      minHeight: '70px',
-    },
-  }));
-
-  const ToolbarStyled = styled(Toolbar)(({ theme }) => ({
-    width: '100%',
-    color: theme.palette.text.secondary,
-  }));
 
   return (
     <AppBarStyled position="sticky" color="default">
@@ -76,39 +73,20 @@ const Header = (props) => {
             whiteSpace: 'nowrap',
           }}
         >
-          <h2>Welcome back, {_.startCase(userInfo.name)}!</h2>
+          <h2 style={{ margin: 0 }}>
+            Welcome back, {_.startCase(userInfo.name)}!
+          </h2>
         </Typography>
 
         <Box flexGrow={1} />
 
-        {/* Profile and Notification Group */}
-        <Stack spacing={1} direction="row" alignItems="center">
-          {/* Avatar with purple glow on hover and username tooltip */}
+        {/* Profile only, at far right, responsive */}
+        <Stack direction="row" alignItems="center" spacing={1} ml="auto">
           <Tooltip title={_.startCase(userInfo.name)} arrow>
             <ProfileWrapper>
               <Profile />
             </ProfileWrapper>
           </Tooltip>
-
-          {/* Notification Icon */}
-          <IconButton
-            size="large"
-            aria-label="show notifications"
-            color="inherit"
-            aria-controls="msgs-menu"
-            aria-haspopup="true"
-            sx={{
-              ml: 1,
-              ...(typeof anchorEl2 === 'object' && {
-                color: 'primary.main',
-              }),
-              display: { xs: 'none', sm: 'inline-flex' }, // hide on xs, show on sm+
-            }}
-          >
-            <Badge variant="dot" color="primary">
-              <IconBellRinging size="21" stroke="1.5" />
-            </Badge>
-          </IconButton>
         </Stack>
       </ToolbarStyled>
     </AppBarStyled>
