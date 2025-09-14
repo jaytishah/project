@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Grid, Box, Card, Typography, Stack } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { Security, School } from '@mui/icons-material';
+
 import PageContainer from '../../components/container/PageContainer.jsx';
-// import Logo from 'src/layouts/full/shared/logo/Logo.jsx';
 import AuthRegister from './auth/AuthRegister.jsx';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -25,13 +26,20 @@ const userValidationSchema = yup.object({
     .required('Confirm Password is required')
     .oneOf([yup.ref('password'), null], 'Password must match'),
   role: yup.string().oneOf(['student', 'teacher'], 'Invalid role').required('Role is required'),
+  standard: yup.string().when('role', {
+    is: 'student',
+    then: (schema) => schema.oneOf(['9th', '10th'], 'Invalid standard').required('Standard is required for students'),
+    otherwise: (schema) => schema.notRequired(),
+  }),
 });
+
 const initialUserValues = {
   name: '',
   email: '',
   password: '',
   confirm_password: '',
   role: 'student',
+  standard: '9th',
 };
 
 const Register = () => {
@@ -56,16 +64,17 @@ const Register = () => {
     }
   }, [navigate, userInfo]);
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-  };
-
-  const handleSubmit = async ({ name, email, password, confirm_password, role }) => {
+  const handleSubmit = async ({ name, email, password, confirm_password, role, standard }) => {
     if (password !== confirm_password) {
       toast.error('Passwords do not match');
     } else {
       try {
-        const res = await register({ name, email, password, role }).unwrap();
+        const registerData = { name, email, password, role };
+        if (role === 'student') {
+          registerData.standard = standard;
+        }
+        
+        const res = await register(registerData).unwrap();
         dispatch(setCredentials({ ...res }));
         formik.resetForm();
 
@@ -80,79 +89,127 @@ const Register = () => {
     <PageContainer title="Register" description="this is Register page">
       <Box
         sx={{
+          minHeight: '100vh',
+          background: 'linear-gradient(135deg, #8C4AF2 0%, #8C4AF2 100%)',
           position: 'relative',
-          '&:before': {
+          display: 'flex',
+          alignItems: 'center',
+          padding: '20px 0',
+          '&::before': {
             content: '""',
-            background: 'radial-gradient(#d2f1df, #d3d7fa, #bad8f4)',
-            backgroundSize: '400% 400%',
-            animation: 'gradient 15s ease infinite',
             position: 'absolute',
-            height: '100%',
-            width: '100%',
-            opacity: '0.3',
-          },
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="2"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+          }
         }}
       >
-        <Grid container spacing={0} justifyContent="center" sx={{ height: '100vh' }}>
+        <Grid container spacing={0} justifyContent="center">
           <Grid
             item
             xs={12}
-            sm={12}
+            sm={10}
+            md={8}
             lg={6}
-            xl={12}
+            xl={5}
             display="flex"
             justifyContent="center"
             alignItems="center"
           >
-            <Card elevation={9} sx={{ p: 2, zIndex: 1, width: '100%', maxWidth: '500px' }}>
-              <Box display="flex" alignItems="center" justifyContent="center">
+            <Card 
+              elevation={24} 
+              sx={{ 
+                p: 4, 
+                width: '100%', 
+                maxWidth: '550px',
+                borderRadius: 4,
+                background: 'rgba(255, 255, 255, 0.95)',
+                backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                position: 'relative',
+                overflow: 'visible'
+              }}
+            >
+              {/* Compact Logo Section */}
+              <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
+                <Box
+                  sx={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: '50%',
+                    background: 'linear-gradient(135deg, #8C4AF2 0%, #8C4AF22 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mb: 1.5,
+                    boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)'
+                  }}
+                >
+                  <School sx={{ fontSize: 30, color: 'white' }} />
+                </Box>
                 <Typography
-                  variant="h4" // Choose a suitable variant (h1, h2, h3, h4, h5, h6, subtitle1, subtitle2, body1, body2, etc.)
-                  component="h1" // This will render an <h1> element
-                  style={{
+                  variant="h4"
+                  component="h1"
+                  sx={{
                     fontWeight: 'bold',
-                    color: '#1976d2', // Primary color or any color you prefer
-                    margin: '20px 0',
+                    background: 'linear-gradient(135deg, #8C4AF2 0%, #8C4AF2 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
                     textAlign: 'center',
-                    textShadow: '1px 1px 2px rgba(0, 0, 0, 0.3)', // Optional shadow effect
                   }}
                 >
                   Seonix
                 </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: 'text.secondary',
+                    textAlign: 'center',
+                    fontWeight: 500
+                  }}
+                >
+                  Create Your Account
+                </Typography>
               </Box>
+
               <AuthRegister
                 formik={formik}
                 onSubmit={handleSubmit}
-                subtext={
-                  <Typography variant="subtitle1" textAlign="center" color="textSecondary" mb={1}>
-                    CONDUCT SECURE ONLINE EXAMS NOW
-                  </Typography>
-                }
                 subtitle={
-                  <Stack direction="row" justifyContent="center" spacing={1} mt={3}>
-                    <Typography color="textSecondary" variant="h6" fontWeight="400">
-                      Already have an Account?
+                  <Stack direction="row" spacing={1} justifyContent="center" mt={3}>
+                    <Typography color="text.secondary" variant="body2" fontWeight="400">
+                      Already have an account?
                     </Typography>
                     <Typography
                       component={Link}
                       to="/auth/login"
-                      fontWeight="500"
+                      fontWeight="600"
                       sx={{
                         textDecoration: 'none',
-                        color: 'primary.main',
+                        background: 'linear-gradient(135deg, #8C4AF2 0%, #8C4AF2 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        '&:hover': {
+                          textDecoration: 'underline',
+                        }
                       }}
                     >
                       Sign In
                     </Typography>
-                    {isLoading && <Loader />}
                   </Stack>
                 }
               />
             </Card>
           </Grid>
         </Grid>
+        {isLoading && <Loader />}
       </Box>
     </PageContainer>
   );
 };
+
 export default Register;

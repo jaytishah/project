@@ -25,10 +25,10 @@ const examValidationSchema = yup.object({
     .required('Exam Duration is required'),
   liveDate: yup.date().required('Live Date and Time is required'),
   deadDate: yup.date().required('Dead Date and Time is required'),
-  codingQuestion: yup.object().shape({
-    question: yup.string().required('Coding Question is required'),
-    description: yup.string().required('Question Description is required'),
-  }),
+  // codingQuestion: yup.object().shape({
+  //   question: yup.string().required('Coding Question is required'),
+  //   description: yup.string().required('Question Description is required'),
+  // }),
 });
 
 const CreateExamPage = () => {
@@ -41,10 +41,10 @@ const CreateExamPage = () => {
     duration: '',
     liveDate: '',
     deadDate: '',
-    codingQuestion: {
-      question: '',
-      description: '',
-    },
+    // codingQuestion: {
+    //   question: '',
+    //   description: '',
+    // },
   };
 
   const handleSubmit = async (values) => {
@@ -64,35 +64,35 @@ const CreateExamPage = () => {
         }
 
         // Then create the coding question
-        const codingQuestionData = {
-          question: values.codingQuestion.question,
-          description: values.codingQuestion.description,
-          examId: examId,
-        };
+        // const codingQuestionData = {
+        //   question: values.codingQuestion.question,
+        //   description: values.codingQuestion.description,
+        //   examId: examId,
+        // };
 
-        console.log('Coding Question Data:', codingQuestionData);
+        // console.log('Coding Question Data:', codingQuestionData);
 
-        try {
-          const codingResponse = await axiosInstance.post(
-            '/api/coding/question',
-            codingQuestionData,
-            {
-              withCredentials: true,
-            },
-          );
-          console.log('Coding Response:', codingResponse.data);
+        // try {
+        //   const codingResponse = await axiosInstance.post(
+        //     '/api/coding/question',
+        //     codingQuestionData,
+        //     {
+        //       withCredentials: true,
+        //     },
+        //   );
+        //   console.log('Coding Response:', codingResponse.data);
 
-          if (codingResponse.data.success) {
-            toast.success('Exam and coding question created successfully');
-            formik.resetForm();
-          } else {
-            console.error('Failed to create coding question:', codingResponse.data);
-            toast.error('Failed to create coding question');
-          }
-        } catch (codingError) {
-          console.error('Coding Question Error:', codingError.response?.data || codingError);
-          toast.error(codingError.response?.data?.message || 'Failed to create coding question');
-        }
+        //   if (codingResponse.data.success) {
+        //     toast.success('Exam and coding question created successfully');
+        //     formik.resetForm();
+        //   } else {
+        //     console.error('Failed to create coding question:', codingResponse.data);
+        //     toast.error('Failed to create coding question');
+        //   }
+        // } catch (codingError) {
+        //   console.error('Coding Question Error:', codingError.response?.data || codingError);
+        //   toast.error(codingError.response?.data?.message || 'Failed to create coding question');
+        // }
       }
     } catch (err) {
       console.error('Exam Creation Error:', err);

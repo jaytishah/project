@@ -80,7 +80,7 @@ export default function MultipleChoiceQuestion({ questions, saveUserTestScore, s
           },
         );
 
-        navigate(`/exam/${examId}/codedetails`);
+        // navigate(`/exam/${examId}/codedetails`);
       } catch (error) {
         console.error('Error saving results:', error);
         toast.error('Failed to save results');

@@ -50,7 +50,7 @@ const TestPage = () => {
     setIsMcqCompleted(true);
     // Reset cheating log for coding exam
     resetCheatingLog(examId);
-    navigate(`/exam/${examId}/codedetails`);
+    // navigate(`/exam/${examId}/codedetails`);
   };
 
   const handleTestSubmission = async () => {

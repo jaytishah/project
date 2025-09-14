@@ -105,7 +105,7 @@ const CreateExam = ({ formik, title, subtitle, subtext }) => {
           />
         </Stack>
 
-        <CodingQuestionForm formik={formik} />
+        {/* <CodingQuestionForm formik={formik} /> */}
 
         <Button
           color="primary"
