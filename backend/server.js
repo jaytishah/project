@@ -7,7 +7,7 @@ import examRoutes from "./routes/examRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import codingRoutes from "./routes/codingRoutes.js";
 import resultRoutes from "./routes/resultRoutes.js";
-import result from "./routes/result.js";
+// import result from "./routes/result.js";
 import { exec } from "child_process";
 import fs from "fs";
 import { writeFileSync } from "fs";
