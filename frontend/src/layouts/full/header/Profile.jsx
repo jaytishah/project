@@ -101,12 +101,7 @@ const Profile = () => {
           </ListItemIcon>
           <ListItemText>My Account</ListItemText>
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon component={Link} to="/user/tasks">
-            <IconListCheck width={20} />
-          </ListItemIcon>
-          <ListItemText>My Tasks</ListItemText>
-        </MenuItem>
+       
         <Box mt={1} py={1} px={2}>
           <Button variant="outlined" color="primary" onClick={logoutHandler} fullWidth>
             Logout
