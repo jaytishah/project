@@ -30,7 +30,7 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
-import { Code, Visibility, VisibilityOff, Search, CheckCircle } from '@mui/icons-material';
+import { Code, Search, CheckCircle } from '@mui/icons-material';
 import PageContainer from '../../components/container/PageContainer.jsx';
 import DashboardCard from '../../components/shared/DashboardCard.jsx';
 import axiosInstance from '../../axios.js';
@@ -85,26 +85,6 @@ const ResultPage = () => {
 
     fetchData();
   }, [userInfo]);
-
-  const handleToggleVisibility = async (resultId) => {
-    try {
-      await axiosInstance.put(
-        `/api/users/results/${resultId}/toggle-visibility`,
-        {},
-        {
-          withCredentials: true,
-        },
-      );
-      toast.success('Visibility updated successfully');
-      // Refresh results
-      const response = await axiosInstance.get('/api/users/results/all', {
-        withCredentials: true,
-      });
-      setResults(response.data.data);
-    } catch (err) {
-      toast.error('Failed to update visibility');
-    }
-  };
 
   const handleViewCode = (result) => {
     setSelectedResult(result);
@@ -388,7 +368,6 @@ const ResultPage = () => {
                     <TableCell>Coding Submissions</TableCell>
                     <TableCell>Total Score</TableCell>
                     <TableCell>Submission Date</TableCell>
-                    <TableCell>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -416,14 +395,6 @@ const ResultPage = () => {
                         </Typography>
                       </TableCell>
                       <TableCell>{new Date(result.createdAt).toLocaleDateString()}</TableCell>
-                      <TableCell>
-                        <IconButton
-                          onClick={() => handleToggleVisibility(result._id)}
-                          color={result.showToStudent ? 'success' : 'default'}
-                        >
-                          {result.showToStudent ? <Visibility /> : <VisibilityOff />}
-                        </IconButton>
-                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
