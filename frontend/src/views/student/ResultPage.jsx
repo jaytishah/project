@@ -186,7 +186,8 @@ const ResultPage = () => {
                       <TableCell>MCQ Score</TableCell>
                       <TableCell>Coding Submissions</TableCell>
                       <TableCell>Total Score</TableCell>
-                      <TableCell>Submission Date</TableCell>
+                      <TableCell>Submission Date & Time</TableCell>
+                      <TableCell>View Code</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -209,7 +210,7 @@ const ResultPage = () => {
                             Total: {result.totalMarks}
                           </Typography>
                         </TableCell>
-                        <TableCell>{new Date(result.createdAt).toLocaleDateString()}</TableCell>
+                        <TableCell>{new Date(result.createdAt).toLocaleString()}</TableCell>
                         <TableCell>
                           {result.codingSubmissions?.length > 0 && (
                             <IconButton onClick={() => handleViewCode(result)}>
@@ -367,7 +368,7 @@ const ResultPage = () => {
                     <TableCell>MCQ Score</TableCell>
                     <TableCell>Coding Submissions</TableCell>
                     <TableCell>Total Score</TableCell>
-                    <TableCell>Submission Date</TableCell>
+                    <TableCell>Submission Date & Time</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -394,7 +395,7 @@ const ResultPage = () => {
                           Total: {result.totalMarks}
                         </Typography>
                       </TableCell>
-                      <TableCell>{new Date(result.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>{new Date(result.createdAt).toLocaleString()}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
